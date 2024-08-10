@@ -1,7 +1,8 @@
 from passlib.context import CryptContext
 from jose import  jwt
 from datetime import datetime, timedelta
-from .dbs import user_db
+from .dbs import supa_db
+from pydantic import Json
 import os
 
 SECRET_KEY = os.environ.get('UTILS_SECRET_KEY')
@@ -30,6 +31,11 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 def decode_token(token: str):
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
-def getNewId():
-    users = user_db.table('users').select('*').execute().data
+def getNewId(table_name: str):
+    users = supa_db.table(table_name).select('*').execute().data
+    if len(users) == 0:
+        return 0
     return users[len(users) - 1]["id"] + 1
+
+def clean_skills_json(data: Json):
+    print(data)

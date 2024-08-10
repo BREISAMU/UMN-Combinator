@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Json
 from typing import Optional
 from datetime import datetime
 
@@ -8,6 +8,7 @@ class User(BaseModel):
     password_hash: str
     email: EmailStr
     created_at: str
+    bio: Optional[str] = ""
 
 class UserCreate(BaseModel):
     username: str
@@ -24,3 +25,20 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+class Post(BaseModel):
+    id: int
+    user_id: int
+    title: str
+    description: str
+    github: Optional[str] = ""
+    discord: Optional[str] = ""
+    skills: Optional[dict]
+
+class PostCreate(BaseModel):
+    user_id: int
+    title: str
+    description: str
+    github: Optional[str] = ""
+    discord: Optional[str] = ""
+    skills: Optional[dict]

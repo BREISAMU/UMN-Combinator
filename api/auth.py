@@ -2,8 +2,8 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from supabase import Client
 from jose import JWTError
-from .dbs import user_db
-from .authentication_models import TokenData
+from .dbs import supa_db
+from .models import TokenData
 from .utils import decode_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -24,7 +24,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     
     # Fetch user from Supabase
-    response = user_db.table('users').select('*').eq('email', token_data.email).execute()
+    response = supa_db.table('users').select('*').eq('email', token_data.email).execute()
     user = response.get('data')
     
     if not user:

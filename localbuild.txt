@@ -1,0 +1,6 @@
+## Run API
+uvicorn api.main:app --reload
+
+## Run UI
+cd frontend
+npm run dev
