@@ -17,7 +17,6 @@ const RegistrationForm = () => {
     console.log('Password Confirmation:', passwordConfirmation);
     console.log('Email:', email);
 
-    // Add your registration logic here (e.g., sending data to a backend)
     await api.post("/register/", {
       username: username,
       password: password,
