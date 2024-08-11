@@ -1,26 +1,34 @@
 "use client";  // Add this line at the top
 
 import React, { useState } from 'react'; 
+import api from '../api'
 
-function RegistrationForm() {
+const RegistrationForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setpasswordConfirmation] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleRegisterSubmit = (event) => {
+  const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission here
     console.log('Username:', username);
     console.log('Password:', password);
+    console.log('Password Confirmation:', passwordConfirmation);
     console.log('Email:', email);
 
     // Add your registration logic here (e.g., sending data to a backend)
+    await api.post("/register/", {
+      username: username,
+      password: password,
+      email: email  
+    });
   };
 
   return (
     <form onSubmit={handleRegisterSubmit}>
       <div>
-        <h3>Username</h3>
+        <h3>username</h3>
         <input
           type="text"
           value={username}
@@ -28,7 +36,7 @@ function RegistrationForm() {
         />
       </div>
       <div>
-        <h3>Password</h3>
+        <h3>password</h3>
         <input
           type="password"
           value={password}
@@ -36,14 +44,22 @@ function RegistrationForm() {
         />
       </div>
       <div>
-        <h3>Email</h3>
+        <h3>confirm password</h3>
+        <input
+          type="password"
+          value={passwordConfirmation}
+          onChange={(e) => setpasswordConfirmation(e.target.value)}
+        />
+      </div>
+      <div>
+        <h3>email</h3>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <button type="submit">Register</button>
+      <button type="submit">REGISTER</button>
     </form>
   );
 }

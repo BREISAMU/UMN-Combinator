@@ -5,8 +5,22 @@ from .models import User, UserCreate, UserLogin, Token, Post, PostCreate
 from .auth import get_current_user
 from .utils import hash_password, verify_password, create_access_token, getNewId, clean_skills_json
 from .dbs import supa_db
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    'http://localhost:3000',
+    'https://umn-combinator.vercel.app/'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/register/", response_model=User)
 async def register(user: UserCreate):
