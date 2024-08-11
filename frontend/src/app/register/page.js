@@ -1,27 +1,39 @@
 "use client";  // Add this line at the top
 
 import React, { useState } from 'react'; 
-import api from '../api'
+import { useRouter } from 'next/navigation';
+import api from '../api';
+import axios from 'axios';
 
 const RegistrationForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setpasswordConfirmation] = useState('');
   const [email, setEmail] = useState('');
+  const router = useRouter()
 
   const handleRegisterSubmit = async (event) => {
+    // const router = useRouter();
+
     event.preventDefault();
     // Handle form submission here
     console.log('Username:', username);
     console.log('Password:', password);
     console.log('Password Confirmation:', passwordConfirmation);
     console.log('Email:', email);
+    // try {
+      await api.post("/register/", {
+        username: username,
+        password: password,
+        email: email  
+      });
 
-    await api.post("/register/", {
-      username: username,
-      password: password,
-      email: email  
-    });
+      
+      router.push('/')
+
+    // } catch (err) {
+    //   // alert("ERROR: Registration failed");  
+    // }
   };
 
   return (
