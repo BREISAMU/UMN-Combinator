@@ -4,18 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  --background-start-rgb: 170, 180, 199;
+  --background-end-rgb: 236, 243, 255;
 }
 
 @layer utilities {
@@ -23,3 +13,21 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-dark {
+  background: rgb(var(--background-start-rgb)); 
+}
+
+.bg-light {
+  background: rgb(var(--background-end-rgb)); 
+}
+
+.bg-gen {
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));  
+}
+
