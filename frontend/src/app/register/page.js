@@ -40,7 +40,7 @@ const RegistrationForm = () => {
   return (
     <main>
       <Header/>
-      <div className='bg-light'>
+      <div className='bg-dark'>
         <form onSubmit={handleRegisterSubmit}>
           <div>
             <h3>username</h3>
@@ -50,7 +50,7 @@ const RegistrationForm = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div bg-dark>
+          <div className='bg-dark'>
             <h3>password</h3>
             <input
               type="password"
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div>
+          <div className='bg-dark'>
             <h3>confirm password</h3>
             <input
               type="password"
@@ -66,7 +66,7 @@ const RegistrationForm = () => {
               onChange={(e) => setpasswordConfirmation(e.target.value)}
             />
           </div>
-          <div>
+          <div className='bg-dark'>
             <h3>email</h3>
             <input
               type="email"
@@ -84,8 +84,8 @@ const RegistrationForm = () => {
 
 export default function Register() {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-dark" >
-        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex bg-dark">
+      <main className="flex min-h-screen flex-col bg-dark items-center justify-between p-24" >
+        <div className="z-10 max-w-5xl w-full items-center bg-dark justify-between font-mono text-sm lg:flex">
           <div>
             <RegistrationForm />
           </div>

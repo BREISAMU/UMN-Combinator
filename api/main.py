@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime
-from .models import User, UserCreate, UserLogin, Token, Post, PostCreate
+from .models import User, UserCreate, UserLogin, Token, Post, PostCreate, PostsList
 from .auth import get_current_user
 from .utils import hash_password, verify_password, create_access_token, getNewId, clean_skills_json
 from .dbs import supa_db
@@ -62,16 +62,11 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     access_token = create_access_token(data={"sub": user[0]["email"]})
     return {"access_token": access_token, "token_type": "bearer"}
 
-@app.get("/users/me/", response_model=User)
-async def read_users_me(current_user: User = Depends(get_current_user)):
-    return current_user
-
 @app.post("/new_post", response_model=Post)
 async def make_post(post_data: PostCreate):
     # use in new post
     # user_id = get_current_user().id
     user_id = 0
-    skills = {"key": 3, "key2": "Hello world"}
 
     # use to clean json / array input
     # cleaned_skills = clean_skills_json(skills)
@@ -83,12 +78,32 @@ async def make_post(post_data: PostCreate):
         "description": post_data.description,
         "github": post_data.github,
         "discord": post_data.discord,
-        "skills": skills,
+        "skills": post_data.skills,
         "created_at": datetime.utcnow().isoformat()
     }
 
     supa_db.table('posts').insert(new_post).execute()
     
     return new_post
+
+
+# GET METHODS #
+
+@app.get("/users/me/", response_model=User)
+async def read_users_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+@app.get("/posts/", response_model=PostsList)
+async def get_posts(start, end):
+    response = supa_db.table('posts').select('*').execute()  
+    posts_raw = response.data 
+
+
+    # posts = {}
+    # enumed = enumerate(posts_raw)
+    # for ele in enumed:
+    #     posts[ele[0]] = ele[1]
+
+    return {'posts': posts_raw}
 
     
