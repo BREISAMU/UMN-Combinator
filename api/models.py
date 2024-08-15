@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Json
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 class User(BaseModel):
@@ -33,7 +33,7 @@ class Post(BaseModel):
     description: str
     github: Optional[str] = ""
     discord: Optional[str] = ""
-    skills: Optional[dict]
+    skills: Optional[dict] = {}
 
 class PostCreate(BaseModel):
     user_id: int
@@ -41,4 +41,7 @@ class PostCreate(BaseModel):
     description: str
     github: Optional[str] = ""
     discord: Optional[str] = ""
-    skills: Optional[dict]
+    skills: Optional[dict] = {}
+
+class PostsList(BaseModel):
+    posts: List[Post]
